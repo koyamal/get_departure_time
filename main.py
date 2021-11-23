@@ -1,9 +1,10 @@
 import requests
 
-class GetDepartureTime():
+
+class GetDepartureTime:
     def __init__(self, urlcode, code):
         # 駅すぱあとのurl。目的地をurlcode、codeで指定。出発は稲毛
-        self.Url = 'https://roote.ekispert.net/ja/result?arr=' + urlcode + '&amp;arr_code=' + code +'&amp;connect=true&amp;dep=%E7%A8%B2%E6%AF%9B&amp;dep_code=22197&amp;highway=true&amp;hour&amp;limitedExpress=true&amp;liner=true&amp;local=true&amp;minute&amp;plane=true&amp;shinkansen=true&amp;ship=true&amp;sleep=false&amp;sort=transfer&amp;surcharge=3&amp;type=dep&amp;via1=&amp;via1_code=&amp;via2=&amp;via2_code='
+        self.Url = 'https://roote.ekispert.net/ja/result?arr=' + urlcode + '&amp;arr_code=' + code + '&amp;connect=true&amp;dep=%E7%A8%B2%E6%AF%9B&amp;dep_code=22197&amp;highway=true&amp;hour&amp;limitedExpress=true&amp;liner=true&amp;local=true&amp;minute&amp;plane=true&amp;shinkansen=true&amp;ship=true&amp;sleep=false&amp;sort=transfer&amp;surcharge=3&amp;type=dep&amp;via1=&amp;via1_code=&amp;via2=&amp;via2_code='
 
     # 駅すぱあと for WEB にCurlする。クラス変数のUrlを指定
     def curl_to_ekispert(self):
@@ -16,7 +17,7 @@ class GetDepartureTime():
         responseTexts = response.text.split('\n')
         return responseTexts
 
-    #レスポンスから「経路1」「経路2」..「経路4」をキーワードに発車時刻(hh:mm)を取得し、出力
+    # レスポンスから「経路1」「経路2」..「経路4」をキーワードに発車時刻(hh:mm)を取得し、出力
     def get_departure_time(self):
         responseTexts = self.reform_response()
         departureTimes = []
@@ -32,9 +33,10 @@ class GetDepartureTime():
 
         return departureTimes
 
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    #getdt = GetDepartureTime('%E6%9D%B1%E4%BA%AC', '22828')
+    # getdt = GetDepartureTime('%E6%9D%B1%E4%BA%AC', '22828')
     getdt = GetDepartureTime('%E5%8D%83%E8%91%89', '22361')
     outputs = getdt.get_departure_time()
     for output in outputs:
