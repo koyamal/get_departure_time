@@ -1,5 +1,5 @@
 import requests
-
+import datetime
 
 class GetDepartureTime:
     def __init__(self, urlcode, code):
@@ -33,6 +33,15 @@ class GetDepartureTime:
 
         return departureTimes
 
+    def cal_diff_from_now(self, departureTime="18:12"):
+        dt_now = datetime.datetime.now()
+        dT_h = departureTime.split(":")[0]
+        dT_m = departureTime.split(":")[1]
+        t = datetime.time(int(dT_h), int(dT_m))
+        tt = datetime.time(4, 3)
+        print(t, tt)
+        print(tt - t)
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -41,3 +50,5 @@ if __name__ == '__main__':
     outputs = getdt.get_departure_time()
     for output in outputs:
         print(output)
+
+    getdt.cal_diff_from_now()
