@@ -34,13 +34,25 @@ class GetDepartureTime:
         return departureTimes
 
     def cal_diff_from_now(self, departureTime="18:12"):
+        departure_h = int(departureTime.split(":")[0])
+        departure_m = int(departureTime.split(":")[1])
+
         dt_now = datetime.datetime.now()
-        dT_h = departureTime.split(":")[0]
-        dT_m = departureTime.split(":")[1]
-        t = datetime.time(int(dT_h), int(dT_m))
-        tt = datetime.time(4, 3)
-        print(t, tt)
-        print(tt - t)
+
+        if departure_h < dt_now.hour:
+            departure_time = datetime.datetime(dt_now.year, dt_now.month, dt_now.day + 1, departure_h, departure_m)
+        else:
+            departure_time = datetime.datetime(dt_now.year, dt_now.month, dt_now.day, departure_h, departure_m)
+
+        diff = departure_time - dt_now
+        diff_m = str(diff.seconds / 60).split('.')[0]
+        diff_s = str(diff.seconds - int(diff_m) * 60)
+
+        if diff_m == "0":
+            return diff_s + "秒後の"
+        else:
+            return diff_m + "分" + diff_s + "秒後の"
+
 
 
 # Press the green button in the gutter to run the script.
@@ -49,6 +61,5 @@ if __name__ == '__main__':
     getdt = GetDepartureTime('%E5%8D%83%E8%91%89', '22361')
     outputs = getdt.get_departure_time()
     for output in outputs:
-        print(output)
-
-    getdt.cal_diff_from_now()
+        diff = getdt.cal_diff_from_now(output)
+        print(diff + output)
