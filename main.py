@@ -45,13 +45,13 @@ class GetDepartureTime:
             departure_time = datetime.datetime(dt_now.year, dt_now.month, dt_now.day, departure_h, departure_m)
 
         diff = departure_time - dt_now
-        diff_m = str(diff.seconds / 60).split('.')[0]
-        diff_s = str(diff.seconds - int(diff_m) * 60)
-
-        if diff_m == "0":
-            return diff_s + "秒後の"
+        if diff.days < 0:
+            return "1分以内の"
         else:
-            return diff_m + "分" + diff_s + "秒後の"
+            diff_m = str(diff.seconds / 60).split('.')[0]
+            diff_s = str(diff.seconds - int(diff_m) * 60)
+
+            return str(int(diff_m) + 1) + "分後の"
 
 
 
