@@ -33,7 +33,7 @@ class GetDepartureTime:
 
         return departureTimes
 
-    def cal_diff_from_now(self, departureTime="18:12"):
+    def cal_diff_from_now(self, departureTime):
         departure_h = int(departureTime.split(":")[0])
         departure_m = int(departureTime.split(":")[1])
 
@@ -49,10 +49,9 @@ class GetDepartureTime:
             return "1分以内の"
         else:
             diff_m = str(diff.seconds / 60).split('.')[0]
-            diff_s = str(diff.seconds - int(diff_m) * 60)
+            # diff_s = str(diff.seconds - int(diff_m) * 60)
 
             return str(int(diff_m) + 1) + "分後の"
-
 
 
 # Press the green button in the gutter to run the script.
