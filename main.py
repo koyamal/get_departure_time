@@ -53,6 +53,25 @@ class GetDepartureTime:
 
             return str(int(diff_m) + 1) + "分後の"
 
+    def cal_diff_from_utc_now(self, departureTime):
+        departure_h = int(departureTime.split(":")[0])
+        departure_m = int(departureTime.split(":")[1])
+
+        dt_now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+
+        if departure_h < dt_now.hour:
+            departure_time = datetime.datetime(dt_now.year, dt_now.month, dt_now.day + 1, departure_h, departure_m)
+        else:
+            departure_time = datetime.datetime(dt_now.year, dt_now.month, dt_now.day, departure_h, departure_m)
+
+        diff = departure_time - dt_now
+        if diff.days < 0:
+            return "1分以内の"
+        else:
+            diff_m = str(diff.seconds / 60).split('.')[0]
+            # diff_s = str(diff.seconds - int(diff_m) * 60)
+
+            return str(int(diff_m) + 1) + "分後の" + departureTime
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -60,5 +79,4 @@ if __name__ == '__main__':
     getdt = GetDepartureTime('%E5%8D%83%E8%91%89', '22361')
     outputs = getdt.get_departure_time()
     for output in outputs:
-        diff = getdt.cal_diff_from_now(output)
-        print(diff + output)
+        print(getdt.cal_diff_from_utc_now(output))
